@@ -1,0 +1,16 @@
+yulia@yulia-VirtualBox:~$ uname
+Linux
+
+yulia@yulia-VirtualBox:~$ whoami
+yulia
+
+yulia@yulia-VirtualBox:~$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 20.04.3 LTS
+Release:	20.04
+Codename:	focal
+
+yulia@yulia-VirtualBox:~$ cat /proc/version
+Linux version 5.11.0-46-generic (buildd@lgw01-amd64-010) (gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, GNU ld (GNU Binutils for Ubuntu) 2.34) #51~20.04.1-Ubuntu SMP Fri Jan 7 06:51:40 UTC 2022
+yulia@yulia-VirtualBox:~$ 

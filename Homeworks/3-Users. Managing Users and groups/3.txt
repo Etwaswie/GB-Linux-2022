@@ -1,0 +1,83 @@
+root@yulia-VirtualBox:/home/yulia# useradd -s /bin/bash -d /home/myuser2 -m  myuser2
+root@yulia-VirtualBox:/home/yulia# passwd myuser2
+Новый пароль : 
+Повторите ввод нового пароля : 
+passwd: пароль успешно обновлён
+root@yulia-VirtualBox:/home/yulia# cd ..
+root@yulia-VirtualBox:/home# cd ..
+root@yulia-VirtualBox:/# cd etc/
+root@yulia-VirtualBox:/etc# more passwd
+
+...
+myuser2:x:1003:1003::/home/myuser2:/bin/bash
+
+root@yulia-VirtualBox:/etc# userdel myuser2 -f -r
+userdel: почтовый ящик myuser2 (/var/mail/myuser2) не найден
+
+----------------------------------------Работа с группами--------------------------------------
+
+yulia@yulia-VirtualBox:/etc$ sudo groupadd dev
+yulia@yulia-VirtualBox:/etc$ sudo groupadd dev_1
+yulia@yulia-VirtualBox:/etc$ sudo usermod -a -G dev yulia
+yulia@yulia-VirtualBox:/etc$ sudo usermod -a -G dev myuser1
+yulia@yulia-VirtualBox:/etc$ sudo usermod -a -G dev_1 myuser1
+yulia@yulia-VirtualBox:/etc$ groups
+yulia adm cdrom sudo dip plugdev lpadmin lxd sambashare dev
+yulia@yulia-VirtualBox:/etc$ su myuser1
+Пароль: 
+
+myuser1@yulia-VirtualBox:/etc$ groups
+myuser1 dev dev_1
+
+yulia@yulia-VirtualBox:/etc$ sudo usermod -g students myuser1
+yulia@yulia-VirtualBox:/etc$ su myuser1
+Пароль: 
+myuser1@yulia-VirtualBox:/etc$ groups
+students dev dev_1
+myuser1@yulia-VirtualBox:/etc$ su yulia
+Пароль: 
+yulia@yulia-VirtualBox:/etc$ sudo deluser myuser1 dev
+Удаляется пользователь «myuser1» из группы «dev» ...
+Готово.
+
+----------------------------------Суперпользователь-------------------------------------------
+
+yulia@yulia-VirtualBox:/etc$ sudo usermod -aG sudo myuser1
+myuser1@yulia-VirtualBox:/etc$ sudo su myuser1
+[sudo] пароль для myuser1: 
+myuser1@yulia-VirtualBox:/etc$ groups
+students sudo dev_1
+
+myuser1@yulia-VirtualBox:/etc$ sudo useradd myuser3
+
+myuser1@yulia-VirtualBox:/etc$ sudo whoami
+root
+
+-----------------------------------Выдача пользователю myuser1 прав на выполнение команды useradd---------------------------------------------
+
+myuser1@yulia-VirtualBox:/home/yulia$ sudo deluser myuser1 sudo
+Удаляется пользователь «myuser1» из группы «sudo» ...
+Готово.
+
+myuser1@yulia-VirtualBox:/home/yulia$ groups
+students dev_1
+myuser1@yulia-VirtualBox:/home/yulia$ sudo useradd -s /bin/bash user4
+myuser1 отсутствует в файле sudoers. Данное действие будет занесено в журнал.
+
+myuser1@yulia-VirtualBox:/home/yulia$ su yulia
+Пароль: 
+yulia@yulia-VirtualBox:~$ sudo visudo
+[sudo] пароль для yulia: 
+
+***
+# Cmnd alias specification
+Cmnd_Alias ADD_CMD = /usr/sbin/useradd
+myuser1 ALL=(ALL) NOPASSWD: ADD_CMD
+***
+
+yulia@yulia-VirtualBox:~$ su myuser1
+Пароль: 
+myuser1@yulia-VirtualBox:/home/yulia$ sudo useradd -s /bin/bash user4
+myuser1@yulia-VirtualBox:/home/yulia$ 
+
+

@@ -1,0 +1,124 @@
+-----------------------------------------1-------------------------------------------------------------
+yulia@yulia-VirtualBox:~$ echo 1234567 > first_task.txt
+yulia@yulia-VirtualBox:~$ cat first_task.txt 
+1234567
+
+-----------------------------------------1.1-------------------------------------------------------------
+yulia@yulia-VirtualBox:~$ cat /etc/* 1>results.txt 2>errors.txt
+
+yulia@yulia-VirtualBox:~$ cat results.txt 
+# /etc/adduser.conf: `adduser' configuration.
+# See adduser(8) and adduser.conf(5) for full documentation.
+
+# The DSHELL variable specifies the default login shell on your
+# system.
+DSHELL=/bin/bash
+
+# The DHOME variable specifies the directory containing users' home
+# directories.
+DHOME=/home
+
+# If GROUPHOMES is "yes", then the home directories will be created as
+# /home/groupname/user.
+GROUPHOMES=no
+
+# If LETTERHOMES is "yes", then the created home directories will have
+# an extra directory - the first letter of the user name. For example:
+# /home/u/user.
+LETTERHOMES=no
+
+# The SKEL variable specifies the directory containing "skeletal" user
+# files; in other words, files such as a sample .profile that will be
+# copied to the new user's home directory when it is created.
+SKEL=/etc/skel
+
+# FIRST_SYSTEM_[GU]ID to LAST_SYSTEM_[GU]ID inclusive is the range for UIDs
+# for dynamically allocated administrative and system accounts/groups.
+# Please note that system software, such as the users allocated by the base-passwd
+# package, may assume that UIDs less than 100 are unallocated.
+FIRST_SYSTEM_UID=100
+LAST_SYSTEM_UID=999
+
+FIRST_SYSTEM_GID=100
+LAST_SYSTEM_GID=999
+
+# FIRST_[GU]ID to LAST_[GU]ID inclusive is the range of UIDs of dynamically
+# allocated user accounts/groups.
+FIRST_UID=1000
+LAST_UID=59999
+
+FIRST_GID=1000
+LAST_GID=59999
+
+
+yulia@yulia-VirtualBox:~$ cat errors.txt 
+cat: /etc/acpi: Это каталог
+cat: /etc/alsa: Это каталог
+cat: /etc/alternatives: Это каталог
+cat: /etc/apm: Это каталог
+cat: /etc/apparmor: Это каталог
+cat: /etc/apparmor.d: Это каталог
+cat: /etc/apport: Это каталог
+cat: /etc/apt: Это каталог
+cat: /etc/avahi: Это каталог
+cat: /etc/bash_completion.d: Это каталог
+cat: /etc/binfmt.d: Это каталог
+cat: /etc/bluetooth: Это каталог
+cat: /etc/brlapi.key: Отказано в доступе
+cat: /etc/brltty: Это каталог
+cat: /etc/ca-certificates: Это каталог
+cat: /etc/calendar: Это каталог
+cat: /etc/chatscripts: Это каталог
+cat: /etc/console-setup: Это каталог
+cat: /etc/cracklib: Это каталог
+cat: /etc/cron.d: Это каталог
+cat: /etc/cron.daily: Это каталог
+cat: /etc/cron.hourly: Это каталог
+cat: /etc/cron.monthly: Это каталог
+
+
+-----------------------------------------------------2-------------------------------------------------
+yulia@yulia-VirtualBox:~$ ls -l /etc | cut -b 15-26 | sort -u
+root dip    
+root lp     
+root root   
+root shadow 
+
+------------------------------------------------------3------------------------------------------------
+yulia@yulia-VirtualBox:~$ top
+
+ PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                             
+ 2475 root      20   0   12184   6916   6068 S   0,0   0,2   0:00.00 sshd                                                                                                                                
+   
+
+yulia@yulia-VirtualBox:~$ systemctl restart sshd
+yulia@yulia-VirtualBox:~$ top
+
+ PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                             
+ 2589 root      20   0   12184   6948   6104 S   0,0   0,2   0:00.00 sshd                                                                                                                                
+   
+PID изменился
+
+yulia@yulia-VirtualBox:~$ systemctl reload sshd
+yulia@yulia-VirtualBox:~$ top
+
+ PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                             
+ 2589 root      20   0   12184   6912   6068 S   0,0   0,2   0:00.01 sshd                                                                                                                                
+ 
+PID не изменился
+
+
+-----------------------------------------------------4-------------------------------------------------
+yulia@yulia-VirtualBox:~$ mc
+
+
+yulia@yulia-VirtualBox:~$ ps -aux | grep mc
+yulia       1214  0.0  0.2 171728  7196 ?        Sl   09:54   0:00 /usr/libexec/ibus-memconf
+yulia       5203  0.0  0.3  31496  9944 pts/0    S+   12:25   0:00 mc
+yulia       5318  0.0  0.0  17696   664 pts/2    S+   12:29   0:00 grep --color=auto mc
+
+yulia@yulia-VirtualBox:~$ sudo kill -9 5203
+[sudo] пароль для yulia: 
+
+yulia@yulia-VirtualBox:~$ Killed
+

@@ -1,0 +1,56 @@
+
+-----------------------------------------------------Работа с файлами-------------------------------------------------
+yulia@yulia-VirtualBox:~$ mkdir students
+yulia@yulia-VirtualBox:~$ mkdir mentors
+yulia@yulia-VirtualBox:~$ ls
+ mentors   students   Документы   Изображения   Общедоступные   Шаблоны
+ snap      Видео      Загрузки    Музыка       'Рабочий стол'
+yulia@yulia-VirtualBox:~$ cd mentors/
+yulia@yulia-VirtualBox:~/mentors$ touch mentors_list.txt
+yulia@yulia-VirtualBox:~/mentors$ nano mentors_list.txt 
+yulia@yulia-VirtualBox:~/mentors$ nano mentors_list.txt 
+yulia@yulia-VirtualBox:~/mentors$ cd ..
+yulia@yulia-VirtualBox:~$ cd students/
+yulia@yulia-VirtualBox:~/students$ touch students_list.txt
+yulia@yulia-VirtualBox:~/students$ nano students_list.txt 
+yulia@yulia-VirtualBox:~/students$ mv mentors_list.txt ~/students
+mv: не удалось выполнить stat для 'mentors_list.txt': Нет такого файла или каталога
+yulia@yulia-VirtualBox:~/students$ cd ..
+yulia@yulia-VirtualBox:~$ cd mentors/
+yulia@yulia-VirtualBox:~/mentors$ mv mentors_list.txt ~/students
+yulia@yulia-VirtualBox:~/mentors$ ls
+yulia@yulia-VirtualBox:~/mentors$ cd ..
+yulia@yulia-VirtualBox:~$ ls
+ mentors   students   Документы   Изображения   Общедоступные   Шаблоны
+ snap      Видео      Загрузки    Музыка       'Рабочий стол'
+yulia@yulia-VirtualBox:~$ cd students/
+yulia@yulia-VirtualBox:~/students$ ls
+mentors_list.txt  students_list.txt
+yulia@yulia-VirtualBox:~/students$ cd ..
+yulia@yulia-VirtualBox:~$ rm mentors/ -r
+yulia@yulia-VirtualBox:~$ ls
+ snap       Видео       Загрузки      Музыка         'Рабочий стол'
+ students   Документы   Изображения   Общедоступные   Шаблоны
+yulia@yulia-VirtualBox:~$ mv students/ students_and_mentors
+yulia@yulia-VirtualBox:~$ ls
+ snap                   Видео       Загрузки      Музыка         'Рабочий стол'
+ students_and_mentors   Документы   Изображения   Общедоступные   Шаблоны
+yulia@yulia-VirtualBox:~$ rm students_and_mentors/ -r
+yulia@yulia-VirtualBox:~$ ls
+ snap    Документы   Изображения   Общедоступные   Шаблоны
+ Видео   Загрузки    Музыка       'Рабочий стол'
+
+-----------------------------------------------------Работа с SSH-------------------------------------------------
+yulia@yulia-VirtualBox:~$ hostname -I
+192.168.56.101 
+
+Команды из MobaXterm:
+
+yulia@yulia-VirtualBox:~$ whoami
+yulia
+yulia@yulia-VirtualBox:~$ uname
+Linux
+yulia@yulia-VirtualBox:~$ hostname -I
+192.168.56.101
+yulia@yulia-VirtualBox:~$
+

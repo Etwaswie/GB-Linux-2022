@@ -1,0 +1,138 @@
+-----------------------------------------------------1------------------------------------------------
+yulia@yulia-VirtualBox:~$ echo new line> file1.txt
+yulia@yulia-VirtualBox:~$ cp file1.txt file2.txt
+yulia@yulia-VirtualBox:~$ cat file2.txt 
+new line
+yulia@yulia-VirtualBox:~$ ln -s file1.txt file3.txt
+yulia@yulia-VirtualBox:~$ ln file1.txt file4.txt
+
+yulia@yulia-VirtualBox:~$ ll fil* -i
+554680 -rw-rw-r-- 2 yulia yulia  9 апр  5 23:35 file1.txt
+554681 -rw-rw-r-- 1 yulia yulia  9 апр  5 23:35 file2.txt
+554682 lrwxrwxrwx 1 yulia yulia  9 апр  5 23:37 file3.txt -> file1.txt
+554680 -rw-rw-r-- 2 yulia yulia  9 апр  5 23:35 file4.txt
+
+yulia@yulia-VirtualBox:~$ rm file1.txt 
+yulia@yulia-VirtualBox:~$ ll fil* -i
+554681 -rw-rw-r-- 1 yulia yulia  9 апр  5 23:35 file2.txt
+554682 lrwxrwxrwx 1 yulia yulia  9 апр  5 23:37 file3.txt -> file1.txt
+554680 -rw-rw-r-- 1 yulia yulia  9 апр  5 23:35 file4.txt
+554328 -rw-rw-r-- 1 yulia yulia 22 апр  5 12:02 file_name
+
+yulia@yulia-VirtualBox:~$ cat file3.txt 
+cat: file3.txt: Нет такого файла или каталога
+yulia@yulia-VirtualBox:~$ cat file4.txt 
+new line
+yulia@yulia-VirtualBox:~$ cat file2.txt 
+new line
+
+
+-----------------------------------------------------2-----------------------------------------------
+ulia@yulia-VirtualBox:~/tasks$ ll
+итого 12
+drwxrwxr-x  2 yulia yulia 4096 апр  6 09:30 ./
+drwxr-xr-x 18 yulia yulia 4096 апр  6 09:27 ../
+lrwxrwxrwx  1 yulia yulia   13 апр  5 23:46 dir -> new_file1.txt
+-rw-rw-r--  1 yulia yulia   13 апр  5 23:45 new_file1.txt
+
+yulia@yulia-VirtualBox:~/tasks$ mkdir directory
+
+yulia@yulia-VirtualBox:~/tasks$ mv dir ~/tasks/directory
+
+yulia@yulia-VirtualBox:~/tasks$ cd directory/
+yulia@yulia-VirtualBox:~/tasks/directory$ ll
+итого 8
+drwxrwxr-x 2 yulia yulia 4096 апр  6 09:32 ./
+drwxrwxr-x 3 yulia yulia 4096 апр  6 09:32 ../
+lrwxrwxrwx 1 yulia yulia   13 апр  5 23:46 dir -> new_file1.txt
+
+Ссылка не работает после перемещения в другую директорию
+
+
+------------------------------------------------------3-----------------------------------------------
+yulia@yulia-VirtualBox:~/tasks$ echo > file1.txt
+yulia@yulia-VirtualBox:~/tasks$ echo > file2.txt
+
+yulia@yulia-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 yulia yulia 4096 апр  6 09:35 ./
+drwxr-xr-x 18 yulia yulia 4096 апр  6 09:27 ../
+----------  1 yulia yulia    1 апр  6 09:35 file1.txt
+----------  1 yulia yulia    1 апр  6 09:35 file2.txt
+
+yulia@yulia-VirtualBox:~/tasks$ chmod 664 file1.txt 
+yulia@yulia-VirtualBox:~/tasks$ chmod u+rw file2.txt 
+
+yulia@yulia-VirtualBox:~/tasks$ ll
+итого 16
+drwxrwxr-x  2 yulia yulia 4096 апр  6 09:35 ./
+drwxr-xr-x 18 yulia yulia 4096 апр  6 09:27 ../
+-rw-rw-r--  1 yulia yulia    1 апр  6 09:35 file1.txt
+-rw-------  1 yulia yulia    1 апр  6 09:35 file2.txt
+
+
+-----------------------------------------------------4-------------------------------------------------
+yulia@yulia-VirtualBox:~/tasks$ sudo addgroup developer
+[sudo] пароль для yulia: 
+Добавляется группа «developer» (GID 1009) ...
+Готово.
+
+yulia@yulia-VirtualBox:~/tasks$ sudo usermod -a -G developer user
+yulia@yulia-VirtualBox:~/tasks$ sudo usermod -a -G developer user4
+yulia@yulia-VirtualBox:~/tasks$ sudo usermod -a -G developer myuser3
+
+yulia@yulia-VirtualBox:~/tasks$ getent group | tail
+vboxsf:x:998:
+my_user1:x:1001:
+myuser1:x:1002:
+dev:x:1003:yulia
+dev_1:x:1004:myuser1,yulia
+students:x:1005:
+myuser3:x:1006:
+user:x:1007:
+user4:x:1008:
+developer:x:1009:user,user4,myuser3
+
+yulia@yulia-VirtualBox:~$ mkdir develop_folder
+yulia@yulia-VirtualBox:~$ sudo chown -R :developer .
+yulia@yulia-VirtualBox:~$ sudo chmod -R 2774 .
+
+yulia@yulia-VirtualBox:~$ ll
+итого 1360
+drwxrwsr-- 19 yulia developer  20480 апр 10 20:03  ./
+
+yulia@yulia-VirtualBox:~$ cd develop_folder/
+yulia@yulia-VirtualBox:~/develop_folder$ echo > file1.txt
+yulia@yulia-VirtualBox:~/develop_folder$ ll
+итого 32
+drwxrwsr--  2 yulia developer  4096 апр 10 20:04 ./
+drwxrwsr-- 19 yulia developer 20480 апр 10 20:04 ../
+-rw-r--r--  1 yulia developer     1 апр 10 20:04 file1.txt
+
+yulia@yulia-VirtualBox:~/develop_folder$ sudo su user4
+user4@yulia-VirtualBox:/home/yulia/develop_folder$ echo > file2.txt
+
+yulia@yulia-VirtualBox:~/develop_folder$ ll
+итого 36
+drwxrwsr--  2 yulia developer  4096 апр 10 20:08 ./
+drwxrwsr-- 19 yulia developer 20480 апр 10 20:09 ../
+-rw-r--r--  1 yulia developer     1 апр 10 20:04 file1.txt
+-rw-rw-r--  1 user4 developer     1 апр 10 20:08 file2.txt
+
+
+-----------------------------------------------------5------------------------------------------------
+yulia@yulia-VirtualBox:~/develop_folder$ mkdir trash_folder
+yulia@yulia-VirtualBox:~/develop_folder$ chmod -R +t trash_folder/
+yulia@yulia-VirtualBox:~/develop_folder$ ll
+итого 40
+drwxrwsr--  3 yulia developer  4096 апр 10 20:15 ./
+drwxrwsr-- 19 yulia developer 20480 апр 10 20:15 ../
+-rw-r--r--  1 yulia developer     1 апр 10 20:04 file1.txt
+-rw-rw-r--  1 user4 developer     6 апр 10 20:10 file2.txt
+drwxr-sr-t  2 yulia developer  4096 апр 10 20:15 trash_folder/
+
+yulia@yulia-VirtualBox:~/develop_folder/trash_folder$ sudo su user4
+user4@yulia-VirtualBox:/home/yulia/develop_folder/trash_folder$ rm file1 
+rm: удалить защищённый от записи обычный файл 'file1'? y
+rm: невозможно удалить 'file1': Отказано в доступе
+

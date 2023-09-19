@@ -1,0 +1,88 @@
+yulia@yulia-VirtualBox:~$ sudo apt-add-repository ppa:nginx/stable
+
+yulia@yulia-VirtualBox:~$ cat /etc/apt/sources.list.d/nginx-ubuntu-stable-focal.list 
+deb http://ppa.launchpad.net/nginx/stable/ubuntu focal main
+# deb-src http://ppa.launchpad.net/nginx/stable/ubuntu focal main
+
+yulia@yulia-VirtualBox:~$ sudo apt update
+Сущ:1 http://ru.archive.ubuntu.com/ubuntu focal InRelease
+Сущ:2 http://ru.archive.ubuntu.com/ubuntu focal-updates InRelease                              
+Сущ:3 http://ru.archive.ubuntu.com/ubuntu focal-backports InRelease                            
+Сущ:4 http://ppa.launchpad.net/nginx/stable/ubuntu focal InRelease                             
+Сущ:5 http://security.ubuntu.com/ubuntu focal-security InRelease                               
+Чтение списков пакетов… Готово            
+Построение дерева зависимостей       
+Чтение информации о состоянии… Готово
+Все пакеты имеют последние версии.
+yulia@yulia-VirtualBox:~$ sudo apt install nginx
+
+yulia@yulia-VirtualBox:~$ sudo apt remove nginx
+Удаляется nginx (1.18.0-3ubuntu1+focal2) …
+
+
+------------------------------------------------------2------------------------------------------------
+yulia@yulia-VirtualBox:~$ sudo apt install snapd -y
+
+yulia@yulia-VirtualBox:~$ snap find google | grep google*
+google-cloud-sdk                  380.0.0                google-cloud-sdk*  classic     Google Cloud SDK
+google-cloud-cli                  380.0.0                google-cloud-sdk*  classic     Google Cloud CLI
+google-play-music-desktop-player  v4.7.1                 cooperteam         -           Standalone player for Google Play Music
+google-chat-electron              2.15.0                 ankurk91           -           Unofficial desktop app for Google Chat.
+google-docs                       2022.3.10              comp-labs          -           Word Processor App for Linux
+google-suggests                   0.1                    caldav             -           Google autocomplete suggestions on the command-line
+google-webapp                     1.3                    mardy              -           Webapps for Google services
+googler                           4.3.2                  snapcrafters       -           Power tool to use Google (Web & News) and Google Site Search from the command-line
+google-translate                  4.1.21                 mantou             -           Google 翻译
+certbot-dns-google                1.26.0                 certbot-eff*       -           Google Cloud DNS Authenticator plugin for Certbot
+
+yulia@yulia-VirtualBox:~$ snap install chromium
+chromium 100.0.4896.75 от Canonical✓ установлен
+
+yulia@yulia-VirtualBox:~$ chromium
+Gtk-Message: 21:29:53.169: Failed to load module "canberra-gtk-module"
+Gtk-Message: 21:29:53.224: Failed to load module "canberra-gtk-module"
+[33513:33651:0410/212953.435759:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33513:33651:0410/212953.435866:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33513:33651:0410/212954.390351:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33513:33651:0410/212954.390461:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33513:33651:0410/212955.130132:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33513:33651:0410/212955.130293:ERROR:bus.cc(397)] Failed to connect to the bus: Could not parse server address: Unknown address type (examples of valid types are "tcp" and on UNIX "unix")
+[33663:33663:0410/212959.430126:ERROR:viz_main_impl.cc(188)] Exiting GPU process due to errors during initialization
+[33749:33749:0410/212959.515769:ERROR:sandbox_linux.cc(377)] InitializeSandbox() called with multiple threads in process gpu-process.
+[33749:33749:0410/212959.612764:ERROR:gpu_memory_buffer_support_x11.cc(44)] dri3 extension not supported.
+[33692:8:0410/212959.631135:ERROR:command_buffer_proxy_impl.cc(125)] ContextResult::kTransientFailure: Failed to send GpuControl.CreateCommandBuffer.
+
+Установился браузер Гугл Хром
+
+-------------------------------------------------3-----------------------------------------------------
+yulia@yulia-VirtualBox:~$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+yulia@yulia-VirtualBox:~$ sudo iptables -P INPUT DROP 
+yulia@yulia-VirtualBox:~$ sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+yulia@yulia-VirtualBox:~$ sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+C:\Users\Иван>ssh yulia@192.168.3.25 -p 22
+Password:
+Welcome to Ubuntu 20.04.4 LTS (GNU/Linux 5.13.0-39-generic x86_64)
+
+C:\Users\Иван>ssh yulia@192.168.3.25 -p 81
+ssh: connect to host 192.168.3.25 port 81: Connection timed out
+
+
+------------------------------------------------4------------------------------------------------------
+yulia@yulia-VirtualBox:~$ echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+yulia@yulia-VirtualBox:~$ sudo iptables -A FORWARD -i eth0 -o eth1 -p tcp --syn --dport 80 -m conntrack --ctstate NEW -j ACCEPT
+yulia@yulia-VirtualBox:~$ sudo iptables -A FORWARD -i eth0 -o eth1 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+yulia@yulia-VirtualBox:~$ sudo iptables -A FORWARD -i eth1 -o eth0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+yulia@yulia-VirtualBox:~$ sudo iptables -P FORWARD DROP
+yulia@yulia-VirtualBox:~$ sudo iptables -t nat -A POSTROUTING -o eth1 -p tcp --dport 80 -d 192.168.3.25 -j SNAT --to-source 192.168.3.25:8080
+
+это по инструкции в losst, но не до конца поняла смысл всех действий и даже не знаю, как проверить, работает ли оно
